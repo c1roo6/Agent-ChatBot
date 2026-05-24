@@ -1,0 +1,290 @@
+index.html
+
+<!-- archivo: index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>AgentBot - Atención al Cliente 24/7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .features {
+            color: white;
+        }
+        
+        .feature-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: start;
+            gap: 15px;
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .chat-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 12px;
+            border-radius: 8px;
+            word-wrap: break-word;
+        }
+        
+        .message.user {
+            align-self: flex-end;
+            background: #667eea;
+            color: white;
+        }
+        
+        .message.bot {
+            align-self: flex-start;
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .chat-send {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .chat-send:hover {
+            background: #764ba2;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .chat-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AgentBot</h1>
+            <p>Atención al cliente 24/7 con IA</p>
+        </div>
+        
+        <div class="content">
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div>
+                        <h3>Respuestas Instantáneas</h3>
+                        <p>Tu cliente recibe respuesta en menos de 1 segundo</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">🌙</div>
+                    <div>
+                        <h3>24/7 Sin Descanso</h3>
+                        <p>Funciona día y noche, feriados incluidos</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <div>
+                        <h3>Multiidioma</h3>
+                        <p>Responde en español, inglés, portugués, etc.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <div>
+                        <h3>Ahorra Dinero</h3>
+                        <p>Reduce costos de atención al 80%</p>
+                    </div>
+                </div>
+                
+                <button class="cta-button" onclick="document.querySelector('.chat-container').scrollIntoView({behavior: 'smooth'})">
+                    Prueba Gratis Ahora
+                </button>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-header">AgentBot - Chat Demo</div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">Hola 👋 ¿Cómo puedo ayudarte hoy?</div>
+                </div>
+                <div class="chat-input-container">
+                    <input 
+                        type="text" 
+                        class="chat-input" 
+                        id="messageInput" 
+                        placeholder="Escribe tu mensaje..."
+                        onkeypress="if(event.key==='Enter') sendMessage()"
+                    >
+                    <button class="chat-send" onclick="sendMessage()">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const messagesDiv = document.getElementById('chatMessages');
+            
+            if (!input.value.trim()) return;
+            
+            // Mostrar mensaje del usuario
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = input.value;
+            messagesDiv.appendChild(userMsg);
+            
+            // Enviar a tu servidor en Replit
+            try {
+                const response = await fetch('https://tu-replit-url.replit.dev/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mensaje: input.value })
+                });
+                
+                const data = await response.json();
+                
+                // Mostrar respuesta del bot
+                const botMsg = document.createElement('div');
+                botMsg.className = 'message bot';
+                botMsg.textContent = data.respuesta;
+                messagesDiv.appendChild(botMsg);
+                
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            } catch (error) {
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'message bot';
+                errorMsg.textContent = 'Error conectando. Intenta más tarde.';
+                messagesDiv.appendChild(errorMsg);
+            }
+            
+            input.value = '';
+        }
+    </script>
+</body>
+</html>
