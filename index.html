@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AgentBot - Atención al Cliente 24/7</title>
     
     <!-- Vercel Speed Insights -->
@@ -16,6 +16,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
@@ -38,8 +39,9 @@
             --sidebar-bg: #0f172a;
         }
 
-        html {
-            transition: background-color 0.3s ease;
+        html, body {
+            height: 100%;
+            width: 100%;
         }
 
         body {
@@ -55,6 +57,7 @@
             display: flex;
             width: 100%;
             height: 100vh;
+            flex-direction: row;
         }
 
         /* SIDEBAR */
@@ -64,8 +67,8 @@
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
         .sidebar-header {
@@ -74,6 +77,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .sidebar-title {
@@ -159,6 +163,7 @@
             justify-content: center;
             opacity: 0;
             transition: opacity 0.2s ease;
+            font-size: 16px;
         }
 
         .chat-item:hover .chat-item-delete {
@@ -175,6 +180,7 @@
             font-size: 12px;
             color: var(--text-secondary);
             text-align: center;
+            flex-shrink: 0;
         }
 
         .empty-history {
@@ -182,6 +188,21 @@
             text-align: center;
             color: var(--text-secondary);
             font-size: 13px;
+        }
+
+        .plan-info {
+            padding: 12px;
+            margin: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .plan-info strong {
+            color: var(--gradient-1);
         }
 
         /* CHAT CONTAINER */
@@ -196,7 +217,7 @@
         .chat-header {
             background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 100%);
             color: white;
-            padding: 12px 24px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -214,20 +235,21 @@
         }
 
         .logo-container {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             background: #0a0e1a;
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            flex-shrink: 0;
         }
 
         .header-actions {
             display: flex;
-            gap: 12px;
+            gap: 8px;
         }
 
         .icon-btn {
@@ -243,6 +265,7 @@
             justify-content: center;
             transition: all 0.2s ease;
             padding: 0;
+            flex-shrink: 0;
         }
 
         .icon-btn:hover {
@@ -266,6 +289,7 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 16px;
         }
 
         .modal.active {
@@ -276,10 +300,12 @@
             background: var(--bg-secondary);
             border-radius: 16px;
             padding: 24px;
-            max-width: 400px;
-            width: 90%;
+            max-width: 450px;
+            width: 100%;
             border: 1px solid var(--border-color);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-header {
@@ -316,7 +342,9 @@
         }
 
         .menu-option {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             width: 100%;
             padding: 12px;
             margin-bottom: 8px;
@@ -327,9 +355,6 @@
             cursor: pointer;
             text-align: left;
             transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
 
         .menu-option:hover {
@@ -338,14 +363,55 @@
             border-color: var(--gradient-accent);
         }
 
+        .plan-selection {
+            display: grid;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .plan-card {
+            padding: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--bg-tertiary);
+        }
+
+        .plan-card:hover {
+            border-color: var(--gradient-1);
+        }
+
+        .plan-card.selected {
+            border-color: var(--gradient-1);
+            background: rgba(167, 139, 250, 0.1);
+        }
+
+        .plan-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .plan-limit {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .plan-price {
+            font-weight: 700;
+            color: var(--gradient-1);
+            margin-top: 8px;
+        }
+
         /* CHAT MESSAGES */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 24px 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
             background: var(--bg-primary);
         }
 
@@ -360,26 +426,26 @@
         }
 
         .empty-state-icon {
-            font-size: 64px;
+            font-size: 48px;
         }
 
         .empty-state-text {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 700;
             color: var(--gradient-1);
             text-align: center;
         }
 
         .empty-state-subtext {
-            font-size: 16px;
+            font-size: 14px;
             opacity: 0.7;
             text-align: center;
         }
 
         .message {
             display: flex;
-            gap: 12px;
-            max-width: 85%;
+            gap: 8px;
+            max-width: 90%;
             animation: slideIn 0.3s ease;
         }
 
@@ -400,13 +466,13 @@
         }
 
         .message-avatar {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
             flex-shrink: 0;
         }
 
@@ -422,27 +488,26 @@
 
         .message-content {
             background: var(--message-bot-bg);
-            padding: 14px 18px;
-            border-radius: 14px;
+            padding: 12px 14px;
+            border-radius: 12px;
             word-wrap: break-word;
-            line-height: 1.6;
+            line-height: 1.5;
             border: 1px solid var(--message-bot-border);
             color: var(--text-primary);
-            font-size: 15px;
+            font-size: 14px;
         }
 
         .message.user .message-content {
             background: var(--message-user-bg);
             color: white;
             border: none;
-            border-bottom-right-radius: 4px;
+            border-bottom-right-radius: 2px;
         }
 
         .message.bot .message-content {
-            border-bottom-left-radius: 4px;
+            border-bottom-left-radius: 2px;
         }
 
-        /* MARKDOWN */
         .message-content strong {
             font-weight: 700;
             color: var(--gradient-accent);
@@ -457,17 +522,18 @@
             padding: 2px 6px;
             border-radius: 4px;
             font-family: 'Courier New', monospace;
-            font-size: 13px;
+            font-size: 12px;
             border: 1px solid var(--border-color);
         }
 
         .message-content pre {
             background: var(--bg-primary);
-            padding: 12px;
-            border-radius: 8px;
+            padding: 8px;
+            border-radius: 6px;
             overflow-x: auto;
-            margin: 8px 0;
+            margin: 6px 0;
             border: 1px solid var(--border-color);
+            font-size: 12px;
         }
 
         .message-content pre code {
@@ -477,43 +543,33 @@
             color: var(--gradient-accent);
         }
 
-        .message-content ul, .message-content ol {
-            margin-left: 20px;
-            margin-top: 8px;
-            margin-bottom: 8px;
-        }
-
-        .message-content li {
-            margin-bottom: 6px;
-        }
-
         /* INPUT */
         .chat-input-container {
-            padding: 16px 20px 20px 20px;
+            padding: 12px;
             border-top: 1px solid var(--border-color);
             background: var(--bg-secondary);
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-shrink: 0;
         }
 
         .input-wrapper {
             flex: 1;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: flex-end;
         }
 
         .chat-input {
             flex: 1;
-            padding: 12px 16px;
+            padding: 10px 12px;
             border: 1px solid var(--input-border);
-            border-radius: 10px;
-            font-size: 15px;
+            border-radius: 8px;
+            font-size: 14px;
             font-family: inherit;
             resize: none;
-            max-height: 100px;
-            min-height: 44px;
+            max-height: 80px;
+            min-height: 40px;
             background: var(--input-bg);
             color: var(--text-primary);
             transition: all 0.2s ease;
@@ -531,10 +587,10 @@
         }
 
         .send-btn {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -545,12 +601,12 @@
             color: white;
         }
 
-        .send-btn:hover {
+        .send-btn:hover:not(:disabled) {
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(167, 139, 250, 0.4);
         }
 
-        .send-btn:active {
+        .send-btn:active:not(:disabled) {
             transform: scale(0.95);
         }
 
@@ -559,58 +615,207 @@
             cursor: not-allowed;
         }
 
+        .limit-warning {
+            padding: 10px 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 6px;
+            font-size: 12px;
+            color: #fca5a5;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
         /* SCROLLBAR */
         .chat-messages::-webkit-scrollbar,
-        .chat-history::-webkit-scrollbar {
-            width: 8px;
+        .chat-history::-webkit-scrollbar,
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
         }
 
         .chat-messages::-webkit-scrollbar-track,
-        .chat-history::-webkit-scrollbar-track {
+        .chat-history::-webkit-scrollbar-track,
+        .modal-content::-webkit-scrollbar-track {
             background: transparent;
         }
 
         .chat-messages::-webkit-scrollbar-thumb,
-        .chat-history::-webkit-scrollbar-thumb {
+        .chat-history::-webkit-scrollbar-thumb,
+        .modal-content::-webkit-scrollbar-thumb {
             background: var(--border-color);
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         .chat-messages::-webkit-scrollbar-thumb:hover,
-        .chat-history::-webkit-scrollbar-thumb:hover {
+        .chat-history::-webkit-scrollbar-thumb:hover,
+        .modal-content::-webkit-scrollbar-thumb:hover {
             background: var(--gradient-accent);
         }
 
+        /* RESPONSIVE - TABLET */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .chat-header-title {
+                font-size: 16px;
+            }
+        }
+
+        /* RESPONSIVE - MOBILE */
         @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
             .sidebar {
                 display: none;
+                position: fixed;
+                left: 0;
+                top: 60px;
+                width: 100%;
+                height: calc(100vh - 60px);
+                z-index: 500;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .sidebar.active {
+                display: flex;
+            }
+
+            .chat-container {
+                height: calc(100vh - 60px);
+            }
+
+            .chat-header {
+                padding: 8px 12px;
+                height: 50px;
+            }
+
+            .chat-header-title {
+                font-size: 16px;
+                gap: 8px;
+            }
+
+            .logo-container {
+                width: 36px;
+                height: 36px;
+            }
+
+            .icon-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+
+            .chat-messages {
+                padding: 12px;
+                gap: 10px;
             }
 
             .message {
                 max-width: 95%;
+                gap: 6px;
             }
 
-            .chat-header {
-                padding: 10px 16px;
-            }
-
-            .chat-messages {
-                padding: 16px 12px;
+            .message-avatar {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
             }
 
             .message-content {
+                padding: 10px 12px;
+                font-size: 13px;
+                border-radius: 10px;
+            }
+
+            .chat-input-container {
+                padding: 8px;
+                gap: 6px;
+            }
+
+            .chat-input {
+                padding: 8px 10px;
+                font-size: 13px;
+                min-height: 38px;
+            }
+
+            .send-btn {
+                width: 38px;
+                height: 38px;
+            }
+
+            .modal-content {
+                max-width: 95%;
+                border-radius: 12px;
+                padding: 20px;
+            }
+
+            .empty-state-icon {
+                font-size: 40px;
+            }
+
+            .empty-state-text {
+                font-size: 18px;
+            }
+        }
+
+        /* RESPONSIVE - SMALL MOBILE */
+        @media (max-width: 480px) {
+            .chat-header {
+                padding: 6px 10px;
+                height: 48px;
+            }
+
+            .chat-header-title {
                 font-size: 14px;
+            }
+
+            .logo-container {
+                width: 32px;
+                height: 32px;
+            }
+
+            .icon-btn {
+                width: 30px;
+                height: 30px;
+            }
+
+            .message {
+                max-width: 98%;
+            }
+
+            .message-content {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .modal-content {
+                padding: 16px;
+            }
+
+            .modal-header {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
     <div class="main-container">
-        <!-- SIDEBAR -->
-        <div class="sidebar">
+        <!-- SIDEBAR (Hidden on mobile) -->
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-title">Historial</div>
                 <button class="sidebar-new-btn" onclick="newConversation()" title="Nueva conversación">+</button>
+            </div>
+
+            <div class="plan-info">
+                Plan: <strong id="planNameSidebar">Basic</strong>
+                <br>
+                Uso: <strong id="messageCountDisplay">0/10000</strong>
             </div>
 
             <div class="chat-history" id="chatHistory">
@@ -665,15 +870,23 @@
                     <span>AgentBot</span>
                 </div>
                 <div class="header-actions">
+                    <button class="icon-btn" id="historyBtn" onclick="toggleSidebar()" title="Historial" style="display:none;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                            <path d="M21 3v5h-5"></path>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                            <path d="M3 21v-5h5"></path>
+                        </svg>
+                    </button>
                     <button class="icon-btn" id="infoBtn" title="Información">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="12" y1="16" x2="12" y2="12"></line>
                             <line x1="12" y1="8" x2="12.01" y2="8"></line>
                         </svg>
                     </button>
                     <button class="icon-btn" id="menuBtn" title="Menú">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="5" r="1"></circle>
                             <circle cx="12" cy="12" r="1"></circle>
                             <circle cx="12" cy="19" r="1"></circle>
@@ -691,6 +904,11 @@
                 </div>
             </div>
 
+            <!-- LIMIT WARNING -->
+            <div class="limit-warning" id="limitWarning" style="display:none;">
+                ⚠️ Alcanzaste el límite de mensajes de tu plan. <strong onclick="openModal('planModal')">Upgrade aquí</strong>
+            </div>
+
             <!-- INPUT -->
             <div class="chat-input-container">
                 <div class="input-wrapper">
@@ -698,12 +916,12 @@
                         type="text"
                         class="chat-input"
                         id="messageInput"
-                        placeholder="Escribe tu mensaje aquí..."
+                        placeholder="Escribe tu mensaje..."
                         onkeypress="handleKeyPress(event)"
                     >
                 </div>
                 <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
                     </svg>
                 </button>
@@ -727,12 +945,55 @@
                 <strong>AgentBot</strong> es un asistente de IA disponible 24/7 para ayudarte con tus consultas.
                 <br><br>
                 <strong>Características:</strong>
-                <ul style="margin-top: 8px;">
+                <ul style="margin-top: 8px; margin-left: 16px;">
                     <li>✅ Respuestas instantáneas</li>
                     <li>✅ Disponible 24/7</li>
                     <li>✅ Soporte multiidioma</li>
                     <li>✅ Interfaz intuitiva</li>
                 </ul>
+                <br>
+                <strong>Tu Plan Actual:</strong> <span id="planNameInfo">Basic</span>
+                <br>
+                <strong>Mensajes Usados:</strong> <span id="messagesInfo">0/10000</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="planModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('planModal')">✕</button>
+            <div class="modal-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v20m10-10H2"></path>
+                </svg>
+                Selecciona tu Plan
+            </div>
+            <div class="modal-text">
+                Elige el plan que se adapte mejor a tus necesidades.
+            </div>
+
+            <div class="plan-selection" id="planSelection">
+                <div class="plan-card" onclick="selectPlan('basic')">
+                    <div class="plan-name">📱 BASIC</div>
+                    <div class="plan-limit">Hasta 10,000 mensajes/mes</div>
+                    <div class="plan-price">$9.900 ARS/mes</div>
+                </div>
+
+                <div class="plan-card" onclick="selectPlan('pro')">
+                    <div class="plan-name">🚀 PRO</div>
+                    <div class="plan-limit">Hasta 50,000 mensajes/mes</div>
+                    <div class="plan-price">$24.900 ARS/mes</div>
+                </div>
+
+                <div class="plan-card" onclick="selectPlan('enterprise')">
+                    <div class="plan-name">⭐ ENTERPRISE</div>
+                    <div class="plan-limit">Mensajes ilimitados</div>
+                    <div class="plan-price">Contactar</div>
+                </div>
+            </div>
+
+            <div class="modal-text" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <strong>Nota:</strong> Para efectuar el cambio de plan, contacta a nuestro equipo por WhatsApp o email con tu nuevo plan seleccionado.
             </div>
         </div>
     </div>
@@ -754,6 +1015,12 @@
                     <path d="M20.49 9A9 9 0 0 0 5.64 5.64 9 9 0 0 0 3.51 15"></path>
                 </svg>
                 Nueva conversación
+            </button>
+            <button class="menu-option" onclick="openModal('planModal')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v20m10-10H2"></path>
+                </svg>
+                Cambiar Plan
             </button>
             <button class="menu-option" onclick="exportChat()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -783,28 +1050,108 @@
     </div>
 
     <script>
+        // SISTEMA DE PLANES Y LIMITACIONES
+        const PLANS = {
+            basic: { limit: 10000, name: 'Basic', price: '$9.900/mes' },
+            pro: { limit: 50000, name: 'Pro', price: '$24.900/mes' },
+            enterprise: { limit: Infinity, name: 'Enterprise', price: 'Contactar' }
+        };
+
         const chatMessages = document.getElementById('chatMessages');
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
         const chatHistory = document.getElementById('chatHistory');
+        const sidebar = document.getElementById('sidebar');
+        const historyBtn = document.getElementById('historyBtn');
 
         let isFirstMessage = true;
         let isLoading = false;
         let currentChatId = null;
+        let currentPlan = 'basic';
+        let messageCount = 0;
         let chats = {};
 
-        // Cargar datos guardados
-        function loadChats() {
+        // Mostrar botón de historial en mobile
+        if (window.innerWidth <= 768) {
+            historyBtn.style.display = 'flex';
+        }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+                historyBtn.style.display = 'none';
+            }
+        });
+
+        // Cargar datos
+        function loadData() {
             const saved = localStorage.getItem('agentbot_chats');
-            if (saved) {
-                chats = JSON.parse(saved);
-                renderChatHistory();
+            if (saved) chats = JSON.parse(saved);
+            
+            const savedPlan = localStorage.getItem('agentbot_plan');
+            if (savedPlan) currentPlan = savedPlan;
+            
+            const savedCount = localStorage.getItem('agentbot_message_count');
+            if (savedCount) messageCount = parseInt(savedCount);
+            
+            renderChatHistory();
+            updatePlanDisplay();
+        }
+
+        // Actualizar display del plan
+        function updatePlanDisplay() {
+            const planInfo = PLANS[currentPlan];
+            document.getElementById('planNameSidebar').textContent = planInfo.name;
+            document.getElementById('planNameInfo').textContent = planInfo.name;
+            document.getElementById('messageCountDisplay').textContent = `${messageCount}/${planInfo.limit === Infinity ? '∞' : planInfo.limit}`;
+            document.getElementById('messagesInfo').textContent = `${messageCount}/${planInfo.limit === Infinity ? '∞' : planInfo.limit}`;
+            
+            // Marcar plan seleccionado
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelectorAll('.plan-card')[['basic', 'pro', 'enterprise'].indexOf(currentPlan)].classList.add('selected');
+
+            // Mostrar/ocultar advertencia
+            if (messageCount >= PLANS[currentPlan].limit && PLANS[currentPlan].limit !== Infinity) {
+                document.getElementById('limitWarning').style.display = 'block';
+                sendBtn.disabled = true;
+                messageInput.disabled = true;
+            } else {
+                document.getElementById('limitWarning').style.display = 'none';
+                sendBtn.disabled = false;
+                messageInput.disabled = false;
             }
         }
 
-        // Guardar chats
-        function saveChats() {
-            localStorage.setItem('agentbot_chats', JSON.stringify(chats));
+        // Seleccionar plan
+        function selectPlan(plan) {
+            currentPlan = plan;
+            localStorage.setItem('agentbot_plan', plan);
+            updatePlanDisplay();
+            closeModal('planModal');
+            alert(`✅ Plan cambiado a ${PLANS[plan].name}. Completa tu compra en WhatsApp o email.`);
+        }
+
+        // Toggle sidebar mobile
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+        }
+
+        // Cerrar sidebar al seleccionar chat
+        function loadChat(chatId) {
+            currentChatId = chatId;
+            const chat = chats[chatId];
+            
+            if (chat) {
+                chatMessages.innerHTML = '';
+                chat.messages.forEach(msg => {
+                    addMessage(msg.text, msg.sender, false);
+                });
+                isFirstMessage = false;
+                renderChatHistory();
+            }
+            sidebar.classList.remove('active');
         }
 
         // Renderizar historial
@@ -818,7 +1165,7 @@
 
             chatHistory.innerHTML = chatList.map(([id, chat]) => {
                 const isActive = currentChatId === id;
-                const title = chat.messages[0]?.text?.substring(0, 30) || 'Chat sin título';
+                const title = chat.messages[0]?.text?.substring(0, 25) || 'Chat sin título';
                 return `
                     <div class="chat-item ${isActive ? 'active' : ''}" onclick="loadChat('${id}')">
                         <span class="chat-item-text">${title}...</span>
@@ -826,21 +1173,6 @@
                     </div>
                 `;
             }).join('');
-        }
-
-        // Cargar chat
-        function loadChat(chatId) {
-            currentChatId = chatId;
-            const chat = chats[chatId];
-            
-            if (chat) {
-                chatMessages.innerHTML = '';
-                chat.messages.forEach(msg => {
-                    addMessage(msg.text, msg.sender, false);
-                });
-                isFirstMessage = false;
-                renderChatHistory();
-            }
         }
 
         // Eliminar chat
@@ -856,16 +1188,16 @@
             }
         }
 
-        // Botones de modales
-        document.getElementById('infoBtn').addEventListener('click', () => {
-            openModal('infoModal');
-        });
+        // Guardar chats
+        function saveChats() {
+            localStorage.setItem('agentbot_chats', JSON.stringify(chats));
+        }
 
-        document.getElementById('menuBtn').addEventListener('click', () => {
-            openModal('menuModal');
-        });
+        // Botones
+        document.getElementById('infoBtn').addEventListener('click', () => openModal('infoModal'));
+        document.getElementById('menuBtn').addEventListener('click', () => openModal('menuModal'));
 
-        // Funciones de modales
+        // Modales
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
         }
@@ -874,23 +1206,16 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // Cerrar modal al hacer click fuera
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                }
+                if (e.target === modal) modal.classList.remove('active');
             });
         });
 
-        // Parsear Markdown
+        // Markdown
         function parseMarkdown(text) {
             let html = text;
-
-            html = html.replace(/&/g, '&amp;')
-                       .replace(/</g, '&lt;')
-                       .replace(/>/g, '&gt;');
-
+            html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
             html = html.replace(/_(.*?)_/g, '<em>$1</em>');
@@ -898,28 +1223,23 @@
             html = html.replace(/~~(.*?)~~/g, '<del>$1</del>');
             html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
             html = html.replace(/\n/g, '<br>');
-
             return html;
         }
 
-        // Efecto de escritura
+        // Escritura
         async function typeMessage(element, text, speed = 15) {
             element.innerHTML = '';
-            const finalHtml = parseMarkdown(text);
             let displayText = '';
-
             for (let i = 0; i < text.length; i++) {
                 displayText += text[i];
                 element.innerHTML = parseMarkdown(displayText);
                 await new Promise(resolve => setTimeout(resolve, speed));
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-
-            element.innerHTML = finalHtml;
+            element.innerHTML = parseMarkdown(text);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        // Manejar Enter
         function handleKeyPress(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
                 event.preventDefault();
@@ -932,24 +1252,29 @@
             const message = messageInput.value.trim();
             if (!message || isLoading) return;
 
+            // Verificar límite
+            if (messageCount >= PLANS[currentPlan].limit && PLANS[currentPlan].limit !== Infinity) {
+                alert('Alcanzaste el límite de tu plan. Upgrade para continuar.');
+                return;
+            }
+
             messageInput.value = '';
             sendBtn.disabled = true;
             isLoading = true;
 
             if (isFirstMessage) {
                 currentChatId = Date.now().toString();
-                chats[currentChatId] = {
-                    timestamp: Date.now(),
-                    messages: []
-                };
+                chats[currentChatId] = { timestamp: Date.now(), messages: [] };
                 chatMessages.innerHTML = '';
                 isFirstMessage = false;
             }
 
             addMessage(message, 'user', true);
+            messageCount++;
+            localStorage.setItem('agentbot_message_count', messageCount);
+            updatePlanDisplay();
 
             try {
-                // CAMBIAR ESTA URL POR LA TUYA DE REPLIT
                 const response = await fetch(
                     'https://3f2d2637-e888-4686-80a3-a0c1ee1cae57-00-am2d5up6fb9m.picard.replit.dev/api/chat',
                     {
@@ -959,19 +1284,21 @@
                     }
                 );
 
-                if (!response.ok) throw new Error('Error en la respuesta del servidor');
+                if (!response.ok) throw new Error('Error del servidor');
 
                 const data = await response.json();
 
                 if (data.respuesta) {
                     const botMessageDiv = addMessage('', 'bot', true);
                     await typeMessage(botMessageDiv.querySelector('.message-content'), data.respuesta, 15);
+                    messageCount++;
+                    localStorage.setItem('agentbot_message_count', messageCount);
+                    updatePlanDisplay();
                 } else {
-                    addMessage('❌ Error: No recibí respuesta del servidor', 'bot', true);
+                    addMessage('❌ Error: Sin respuesta', 'bot', true);
                 }
             } catch (error) {
-                console.error('Error:', error);
-                addMessage(`❌ Error conectando: ${error.message}`, 'bot', true);
+                addMessage(`❌ Error: ${error.message}`, 'bot', true);
             } finally {
                 sendBtn.disabled = false;
                 isLoading = false;
@@ -981,7 +1308,6 @@
             }
         }
 
-        // Agregar mensaje
         function addMessage(text, sender, save = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}`;
@@ -992,30 +1318,20 @@
 
             const content = document.createElement('div');
             content.className = 'message-content';
-            
-            if (sender === 'user' || !save) {
-                content.innerHTML = parseMarkdown(text);
-            } else {
-                content.textContent = '';
-            }
+            content.innerHTML = parseMarkdown(text);
 
             messageDiv.appendChild(avatar);
             messageDiv.appendChild(content);
-
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
             if (save && currentChatId) {
-                chats[currentChatId].messages.push({
-                    text: text,
-                    sender: sender
-                });
+                chats[currentChatId].messages.push({ text, sender });
             }
 
             return messageDiv;
         }
 
-        // Nueva conversación
         function newConversation() {
             chatMessages.innerHTML = `
                 <div class="empty-state">
@@ -1031,16 +1347,17 @@
             messageInput.focus();
         }
 
-        // Limpiar historial
         function clearChat() {
-            if (confirm('¿Seguro que quieres eliminar TODO el historial?')) {
+            if (confirm('¿Eliminar TODO el historial?')) {
                 chats = {};
-                saveChats();
+                messageCount = 0;
+                localStorage.setItem('agentbot_chats', JSON.stringify(chats));
+                localStorage.setItem('agentbot_message_count', '0');
                 newConversation();
+                updatePlanDisplay();
             }
         }
 
-        // Descargar chat
         function exportChat() {
             if (!currentChatId || !chats[currentChatId]) {
                 alert('No hay chat para descargar');
@@ -1064,14 +1381,12 @@
             closeModal('menuModal');
         }
 
-        // Auto-resize del input
         messageInput.addEventListener('input', function() {
             this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+            this.style.height = Math.min(this.scrollHeight, 80) + 'px';
         });
 
-        // Inicializar
-        loadChats();
+        loadData();
         messageInput.focus();
     </script>
 </body>
